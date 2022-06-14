@@ -31,8 +31,41 @@ namespace TabloidCLI
         }
         public List<Journal> GetAll()
         {
-            List<Journal> list = new List<Journal>();
-            return list;
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT * FROM Journal";
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<Journal> journalEntries = new List<Journal>();
+
+                        while (reader.Read())
+                        {
+                            int idColumnPosition = reader.GetOrdinal("Id");
+                            int idValue = reader.GetInt32(idColumnPosition);
+                            int titleColumnPosition = reader.GetOrdinal("Title");
+                            string titleValue = reader.GetString(titleColumnPosition);
+                            int contentColumnPosition = reader.GetOrdinal("Content");
+                            string contentValue = reader.GetString(contentColumnPosition);
+                            int dateColumnPosition = reader.GetOrdinal("CreateDateTime");
+                            DateTime dateValue = reader.GetDateTime(dateColumnPosition);
+
+                            Journal journal = new Journal
+                            {
+                                Id = idValue,
+                                Title = titleValue,
+                                Content = contentValue,
+                                CreateDateTime = dateValue
+                            };
+                            journalEntries.Add(journal);
+                        }
+                        return journalEntries;
+                    }
+                }
+            }
         }
         public Journal Get(int id)
         {

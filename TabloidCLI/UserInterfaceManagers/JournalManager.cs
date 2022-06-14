@@ -32,6 +32,9 @@ namespace TabloidCLI.UserInterfaceManagers
             string choice = Console.ReadLine();
             switch (choice)
             {
+                case "1":
+                    List();
+                    return this;
                 case "3":
                     Add();
                     Console.WriteLine($"You've successfully added a journal entry.");
@@ -43,14 +46,18 @@ namespace TabloidCLI.UserInterfaceManagers
             
         }
 
-        //private void List()
-        //{
-        //    List<Journal> Journals = _journalRepository.GetAll();
-        //    foreach (Journal Journal in Journals)
-        //    {
-        //        Console.WriteLine(Journal);
-        //    }
-        //}
+        private void List()
+        {
+            List<Journal> journals = _journalRepository.GetAll();
+            foreach (Journal j in journals)
+            {
+                Console.WriteLine(@$"
+Date: {j.CreateDateTime}
+Title: {j.Title}
+Content: {j.Content}
+");
+            }
+        }
 
         //private Journal Choose(string prompt = null)
         //{
