@@ -30,6 +30,15 @@ namespace TabloidCLI.UserInterfaceManagers
 
             Console.Write("> ");
             string choice = Console.ReadLine();
+            switch(choice)
+            {
+                case "3":
+                    Console.WriteLine("yooooo");
+                    return this;
+                default:
+                    Console.WriteLine("Invalid Selection");
+                    return this;
+            }
             
         }
     }

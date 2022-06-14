@@ -6,7 +6,7 @@ using TabloidCLI.Repositories;
 
 namespace TabloidCLI.Repositories
 {
-    internal class JournalRepository
+    public class JournalRepository : DatabaseConnector
     {
         public JournalRepository(string connectionString) : base(connectionString) { }
     }
