@@ -32,6 +32,9 @@ namespace TabloidCLI.UserInterfaceManagers
             string choice = Console.ReadLine();
             switch(choice)
             {
+                case "1":
+                    List();
+                    return this;
                 case "3":
                     Console.WriteLine("yooooo");
                     return this;
@@ -40,6 +43,15 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
             }
             
+        }
+
+        private void List()
+        {
+            List<Post> posts = _postRepository.GetAll();
+            foreach (Post p in posts)
+            {
+                Console.WriteLine($"Title: {p.Title} | URL: {p.Url}");
+            }
         }
     }
 }
