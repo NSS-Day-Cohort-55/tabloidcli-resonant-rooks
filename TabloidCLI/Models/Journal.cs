@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TabloidCLI.Models
 {
-    internal class Journal
+    public class Journal
     {
         public string Title { get; set; }
         public string Content { get; set; }
