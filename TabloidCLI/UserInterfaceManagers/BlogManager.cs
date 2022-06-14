@@ -33,12 +33,26 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "3":
-                    Console.WriteLine("Yo");
+                    Add();
+                    Console.WriteLine("Your blog has been successfully added to the Database.");
                     return this;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
             }
         }
+
+        private void Add()
+        {
+            Console.WriteLine("New Blog");
+            Blog blog = new Blog();
+            Console.WriteLine("Blog Title");
+            blog.Title = Console.ReadLine();
+            Console.WriteLine("Blog Url");
+            blog.Url = Console.ReadLine();
+            _blogRepository.Insert(blog);
+        }
+
+
     }
 }
