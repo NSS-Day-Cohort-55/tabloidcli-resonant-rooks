@@ -77,6 +77,7 @@ namespace TabloidCLI.Repositories
             }
         }
 
+        
         public void Insert(Post post)
         {
             throw new NotImplementedException();
