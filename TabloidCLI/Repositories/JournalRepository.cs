@@ -36,8 +36,8 @@ namespace TabloidCLI
         }
         public Journal Get(int id)
         {
-            Journal test = new Journal();
-            return test;
+            Journal entry = new Journal();
+            return entry;
         }
         public void Update(Journal entry)
         {
