@@ -1,5 +1,7 @@
-﻿using System;
-using TabloidCLI.UserInterfaceManagers;
+
+﻿using TabloidCLI.UserInterfaceManagers;
+using System;
+
 
 namespace TabloidCLI
 {
