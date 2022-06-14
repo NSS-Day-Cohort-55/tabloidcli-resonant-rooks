@@ -33,8 +33,9 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "3":
-                       Console.WriteLine("Yo");
-                       return this;
+                    Add();
+                    Console.WriteLine($"You've successfully added a journal entry.");
+                    return this;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
@@ -82,22 +83,21 @@ namespace TabloidCLI.UserInterfaceManagers
         //    }
         //}
 
-        //private void Add()
-        //{
-        //    Console.WriteLine("New Journal");
-        //    Journal Journal = new Journal();
+        private void Add()
+        {
+            Console.WriteLine("New Journal");
+            Journal journal = new Journal();
 
-        //    Console.Write("First Name: ");
-        //    Journal.FirstName = Console.ReadLine();
+            Console.Write("Journal Title: ");
+            journal.Title = Console.ReadLine();
 
-        //    Console.Write("Last Name: ");
-        //    Journal.LastName = Console.ReadLine();
+            Console.Write("Journal Content: ");
+            journal.Content = Console.ReadLine();
 
-        //    Console.Write("Bio: ");
-        //    Journal.Bio = Console.ReadLine();
+            journal.CreateDateTime = DateTime.Now;
 
-        //    _journalRepository.Insert(Journal);
-        //}
+            _journalRepository.Insert(journal);
+        }
 
         //private void Edit()
         //{
