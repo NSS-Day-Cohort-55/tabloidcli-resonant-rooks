@@ -107,36 +107,36 @@ namespace TabloidCLI.UserInterfaceManagers
             _journalRepository.Insert(journal);
         }
 
-        private void Edit()
-        {
-            Journal JournalToEdit = Choose("Which Journal would you like to edit?");
-            if (JournalToEdit == null)
-            {
-                return;
-            }
+        //private void Edit()
+        //{
+        //    Journal JournalToEdit = Choose("Which Journal would you like to edit?");
+        //    if (JournalToEdit == null)
+        //    {
+        //        return;
+        //    }
 
-            Console.WriteLine();
-            Console.Write("New first name (blank to leave unchanged: ");
-            string firstName = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(firstName))
-            {
-                JournalToEdit.FirstName = firstName;
-            }
-            Console.Write("New last name (blank to leave unchanged: ");
-            string lastName = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(lastName))
-            {
-                JournalToEdit.LastName = lastName;
-            }
-            Console.Write("New bio (blank to leave unchanged: ");
-            string bio = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(bio))
-            {
-                JournalToEdit.Bio = bio;
-            }
+        //    Console.WriteLine();
+        //    Console.Write("New first name (blank to leave unchanged: ");
+        //    string firstName = Console.ReadLine();
+        //    if (!string.IsNullOrWhiteSpace(firstName))
+        //    {
+        //        JournalToEdit.FirstName = firstName;
+        //    }
+        //    Console.Write("New last name (blank to leave unchanged: ");
+        //    string lastName = Console.ReadLine();
+        //    if (!string.IsNullOrWhiteSpace(lastName))
+        //    {
+        //        JournalToEdit.LastName = lastName;
+        //    }
+        //    Console.Write("New bio (blank to leave unchanged: ");
+        //    string bio = Console.ReadLine();
+        //    if (!string.IsNullOrWhiteSpace(bio))
+        //    {
+        //        JournalToEdit.Bio = bio;
+        //    }
 
-            _journalRepository.Update(JournalToEdit);
-        }
+        //    _journalRepository.Update(JournalToEdit);
+        //}
 
         private void Remove()
         {
