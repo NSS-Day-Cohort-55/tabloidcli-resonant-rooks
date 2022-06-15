@@ -33,12 +33,19 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
-                    Console.WriteLine("Blog List: ");
                     List();
                     return this;
                 case "3":
                     Add();
-                    Console.WriteLine("Your blog has been successfully added to the Database.");
+                    Console.WriteLine("Blog has been successfully added to the Database.");
+                    return this;
+                case "4":
+                    Edit();
+                    Console.WriteLine("Blog has been updated in the Database.");
+                    return this;
+                case "5":
+                    Remove();
+                    Console.WriteLine("Blog has been successfully removed from the Database. ");
                     return this;
                 default:
                     Console.WriteLine("Invalid Selection");
@@ -46,13 +53,41 @@ namespace TabloidCLI.UserInterfaceManagers
             }
         }
 
+        private Blog Choose(string prompt = null)
+        {
+            if(prompt == null)
+            {
+                prompt = "Please Choose a Blog: ";
+            }
+            Console.WriteLine(prompt);
+            List<Blog> blogs = _blogRepository.GetAll();
+
+            for(int i = 0; i < blogs.Count; i++)
+            {
+                Blog blog = blogs[i];
+                Console.WriteLine($"{i + 1}) {blog.Title}");
+            }
+            Console.Write("> ");
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                return blogs[choice - 1];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection");
+                return null;
+            }
+        }
+
         private void Add()
         {
-            Console.WriteLine("New Blog");
+            Console.WriteLine("--New Blog-- ");
             Blog blog = new Blog();
-            Console.WriteLine("Blog Title");
+            Console.Write("Blog Title: ");
             blog.Title = Console.ReadLine();
-            Console.WriteLine("Blog Url");
+            Console.WriteLine("Blog Url: ");
             blog.Url = Console.ReadLine();
             _blogRepository.Insert(blog);
         }
@@ -60,10 +95,49 @@ namespace TabloidCLI.UserInterfaceManagers
         private void List()
         {
             List<Blog> blogs = _blogRepository.GetAll();
-            foreach(Blog blog in blogs)
+
+            Console.WriteLine("---------------------------------------------------------");
+            Console.WriteLine("Blog List: ");
+            Console.WriteLine("---------------------------------------------------------");
+
+
+            foreach (Blog blog in blogs)
             {
-                Console.WriteLine($"Name: {blog.Title}, Url: {blog.Url} ");
+                Console.WriteLine($"{blog.Title} - {blog.Url} ");
+                Console.WriteLine("---------------------------------------------------------");
             }
+        }
+
+        private void Remove()
+        {
+            Blog blogToDelete = Choose("Which Blog would you like to remove?");
+            if(blogToDelete != null)
+            {
+                _blogRepository.Delete(blogToDelete.Id);
+            }
+        }
+
+        private void Edit()
+        {
+            Blog blogToEdit = Choose("Which Blog would you like to edit?");
+            if(blogToEdit == null)
+            {
+                return;
+            }
+            Console.WriteLine();
+            Console.WriteLine("New Title (blank to leave unchanged): ");
+            string title = Console.ReadLine();
+            if(!string.IsNullOrWhiteSpace(title))
+            {
+                blogToEdit.Title = title;
+            }
+            Console.Write("New Url (blank to leave unchanged): ");
+            string url = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                blogToEdit.Url = url;
+            }
+            _blogRepository.Update(blogToEdit);
         }
 
 
