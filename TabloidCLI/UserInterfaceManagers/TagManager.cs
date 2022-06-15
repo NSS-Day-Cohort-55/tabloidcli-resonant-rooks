@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TabloidCLI.Models;
 using TabloidCLI.Repositories;
 
@@ -73,7 +74,18 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Edit()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Which tag would you like to edit?");
+             List<Tag> tags = _tagRepository.GetAll();
+            foreach (Tag tag in tags)
+            {
+                Console.WriteLine($"{tag.Id}) {tag.Name}");
+            }
+            int tagId = int.Parse(Console.ReadLine());
+            Tag tagToEdit = tags.FirstOrDefault(t => t.Id == tagId);
+            Console.Write("New Name: ");
+            tagToEdit.Name = Console.ReadLine();
+            _tagRepository.Update(tagToEdit);
+            Console.WriteLine("Tag has been updated");
         }
 
         private void Remove()
