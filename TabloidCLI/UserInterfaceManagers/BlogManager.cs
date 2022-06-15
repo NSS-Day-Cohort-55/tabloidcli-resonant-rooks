@@ -5,7 +5,7 @@ using TabloidCLI.Repositories;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
-    internal class BlogManager : IUserInterfaceManager
+    public class BlogManager : IUserInterfaceManager
     {
         private readonly IUserInterfaceManager _parentUI;
         private BlogRepository _blogRepository;
@@ -35,6 +35,16 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "1":
                     List();
                     return this;
+                case "2":
+                    Blog blog = Choose();
+                    if(blog == null)
+                    {
+                        return this;
+                    }
+                    else
+                    {
+                        return new BlogDetailManager(this, _connectionString, blog.Id);
+                    }
                 case "3":
                     Add();
                     Console.WriteLine("Blog has been successfully added to the Database.");
