@@ -90,7 +90,15 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Remove()
         {
-            throw new NotImplementedException();
+            List<Tag> tags = _tagRepository.GetAll();
+            foreach (Tag t in tags)
+            {
+                 Console.WriteLine($"{t.Id}) {t.Name}");
+            }
+            Console.WriteLine("Select tag to delete");
+            int tagToDelete = int.Parse(Console.ReadLine());
+            _tagRepository.Delete(tagToDelete);
+            Console.WriteLine($"Tag {tagToDelete} has been deleted");
         }
     }
 }
