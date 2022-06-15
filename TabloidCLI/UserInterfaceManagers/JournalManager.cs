@@ -39,9 +39,14 @@ namespace TabloidCLI.UserInterfaceManagers
                     Add();
                     Console.WriteLine($"You've successfully added a journal entry.");
                     return this;
+                case "4":
+                    List();
+                    Edit();
+                    Console.WriteLine($"You've successfully updated your journal entry!");
+                    return this;
                 case "5":
-                        List();
-                        Remove();
+                    List();
+                    Remove();
                     return this;
                 default:
                     Console.WriteLine("Invalid Selection");
@@ -107,41 +112,41 @@ namespace TabloidCLI.UserInterfaceManagers
             _journalRepository.Insert(journal);
         }
 
-        //private void Edit()
-        //{
-        //    Journal JournalToEdit = Choose("Which Journal would you like to edit?");
-        //    if (JournalToEdit == null)
-        //    {
-        //        return;
-        //    }
+        private void Edit()
+        {
+            Journal journalToEdit;
+            Console.Write("Please provide the id of the journal you'd like to edit: ");
+            int journalId = int.Parse(Console.ReadLine());
+            journalToEdit = _journalRepository.Get(journalId);
+            while (journalToEdit == null)
+            {
+                Console.WriteLine("Whoops, try again");
+                Console.Write("Please provide the id of the journal you'd like to edit: ");
+                journalId = int.Parse(Console.ReadLine());
+                journalToEdit = _journalRepository.Get(journalId);
+            }
 
-        //    Console.WriteLine();
-        //    Console.Write("New first name (blank to leave unchanged: ");
-        //    string firstName = Console.ReadLine();
-        //    if (!string.IsNullOrWhiteSpace(firstName))
-        //    {
-        //        JournalToEdit.FirstName = firstName;
-        //    }
-        //    Console.Write("New last name (blank to leave unchanged: ");
-        //    string lastName = Console.ReadLine();
-        //    if (!string.IsNullOrWhiteSpace(lastName))
-        //    {
-        //        JournalToEdit.LastName = lastName;
-        //    }
-        //    Console.Write("New bio (blank to leave unchanged: ");
-        //    string bio = Console.ReadLine();
-        //    if (!string.IsNullOrWhiteSpace(bio))
-        //    {
-        //        JournalToEdit.Bio = bio;
-        //    }
+            Console.WriteLine();
+            Console.Write("New Journal Title - (blank to leave unchanged): ");
+            string title = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                journalToEdit.Title = title;
+            }
+            Console.Write("New Journal Content - (blank to leave unchanged): ");
+            string content = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(content))
+            {
+                journalToEdit.Content = content;
+            }
 
-        //    _journalRepository.Update(JournalToEdit);
-        //}
+            _journalRepository.Update(journalToEdit);
+        }
 
         private void Remove()
         {
             Journal journalToDelete;
-            Console.WriteLine("Please provide the id of the journal you'd like to delete");
+            Console.Write("Please provide the id of the journal you'd like to delete: ");
             int journalId = int.Parse(Console.ReadLine());
             journalToDelete = _journalRepository.Get(journalId);
             if (journalToDelete != null)
