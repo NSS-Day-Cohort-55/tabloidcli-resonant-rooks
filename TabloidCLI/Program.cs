@@ -25,7 +25,7 @@ namespace TabloidCLI
             List<string> backgroundColors = new List<string>
                 {
                     "Black", "Dark Green", "Dark Yelow", "Dark Gray", "Cyan", "Magenta"
-                    };
+                };
             int index = 1;
             Console.WriteLine("Hello! Welcome to Tabloid!");
             Console.WriteLine("--------------------------");
