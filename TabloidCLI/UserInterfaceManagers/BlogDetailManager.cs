@@ -120,7 +120,7 @@ namespace TabloidCLI.UserInterfaceManagers
             }
         }
 
-        private void ViewBlogPosts()
+        private void ViewBlogPosts(Blog blog)
         {
             List<Post> posts = _postRepository.GetByBlog(_blogId);
             foreach(Post post in posts)
