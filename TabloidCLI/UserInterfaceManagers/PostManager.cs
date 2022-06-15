@@ -10,12 +10,16 @@ namespace TabloidCLI.UserInterfaceManagers
         private readonly IUserInterfaceManager _parentUI;
         private PostRepository _postRepository;
         private string _connectionString;
+        private AuthorRepository _authorRepository;
+        private BlogRepository _blogRepository;
 
         public PostManager(IUserInterfaceManager parentUI, string connectionString)
         {
             _parentUI = parentUI;
             _postRepository = new PostRepository(connectionString);
             _connectionString = connectionString;
+            _authorRepository = new AuthorRepository(connectionString);
+            _blogRepository = new BlogRepository(connectionString);
         }
 
         public IUserInterfaceManager Execute()
@@ -36,7 +40,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     List();
                     return this;
                 case "3":
-                    Console.WriteLine("yooooo");
+                    Add();
                     return this;
                 default:
                     Console.WriteLine("Invalid Selection");
@@ -52,6 +56,41 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 Console.WriteLine($"Title: {p.Title} | URL: {p.Url}");
             }
+        }
+
+        private void Add()
+        {
+            Post post = new Post();
+            Console.Write("New Post Title: ");
+            post.Title = Console.ReadLine();
+
+            Console.WriteLine("New Post URL: ");
+            post.Url = Console.ReadLine();
+
+            Console.WriteLine("New Post Publish Date: ");
+            post.PublishDateTime = DateTime.Parse(Console.ReadLine());
+
+            Console.WriteLine("Choose an Author for the Post:");
+            List<Author> authors = _authorRepository.GetAll();
+
+            foreach (Author author in authors)
+            {
+                Console.WriteLine($"{author.Id}) {author.FullName}");
+            }
+            int postAuthorId = int.Parse(Console.ReadLine());
+            post.Author = _authorRepository.Get(postAuthorId);
+
+            Console.WriteLine("Choose a Blog for the Post:");
+            List<Blog> blogs = _blogRepository.GetAll();
+
+            foreach (Blog blog in blogs)
+            {
+                Console.WriteLine($"{blog.Id}) {blog.Title}");
+            }
+            int postBlogId = int.Parse(Console.ReadLine());
+            post.Blog = _blogRepository.Get(postBlogId);
+
+            _postRepository.Insert(post);
         }
     }
 }
