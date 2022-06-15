@@ -67,7 +67,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void ViewBlogTags(Blog blog)
         {
-            List<Tag> tags = _tagRepository.GetByBlog(blog);
+            List<Tag> tags = blog.Tags;
             foreach(Tag tag in tags)
             {
                 Console.WriteLine(tag.Name);
