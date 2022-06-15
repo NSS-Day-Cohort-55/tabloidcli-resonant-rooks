@@ -84,7 +84,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 int choice = int.Parse(input);
                 return blogs[choice - 1];
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Invalid Selection");
                 return null;
@@ -99,6 +99,7 @@ namespace TabloidCLI.UserInterfaceManagers
             blog.Title = Console.ReadLine();
             Console.WriteLine("Blog Url: ");
             blog.Url = Console.ReadLine();
+            Console.WriteLine("Blog Tags: ");
             _blogRepository.Insert(blog);
         }
 
