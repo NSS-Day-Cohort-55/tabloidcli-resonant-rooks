@@ -42,6 +42,9 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "3":
                     Add();
                     return this;
+                case "5":
+                    Remove();
+                    return this;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
@@ -91,6 +94,20 @@ namespace TabloidCLI.UserInterfaceManagers
             post.Blog = _blogRepository.Get(postBlogId);
 
             _postRepository.Insert(post);
+        }
+
+        private void Remove()
+        {
+            Console.WriteLine("Which Post would you like to remove?");
+            List<Post> posts = _postRepository.GetAll();
+            foreach (Post p in posts)
+            {
+                Console.WriteLine($"{p.Id}: {p.Title}");
+            }
+            int postToDeleteId = int.Parse(Console.ReadLine());
+
+           
+            _postRepository.Delete(postToDeleteId);
         }
     }
 }
