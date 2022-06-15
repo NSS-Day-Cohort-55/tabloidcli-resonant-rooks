@@ -58,8 +58,32 @@ namespace TabloidCLI.Repositories
 
         public Blog Get(int id)
         {
-            Blog entry = new Blog();
-            return entry;
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id, Title, Url FROM Blog WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    Blog blog = null;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (blog == null)
+                        {
+                            blog = new Blog()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Url = reader.GetString(reader.GetOrdinal("Url")),
+                            };
+                        }
+                    }
+                    reader.Close();
+                    return blog;
+                }
+            }
         }
 
         public void Update(Blog blog)
