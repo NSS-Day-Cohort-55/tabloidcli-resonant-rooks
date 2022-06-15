@@ -214,14 +214,10 @@ namespace TabloidCLI.Repositories
                                                p.PublishDateTime,
                                                p.AuthorId,
                                                p.BlogId,
-                                               a.FirstName,
-                                               a.LastName,
-                                               a.Bio,
                                                b.Title AS BlogTitle,
                                                b.URL AS BlogUrl
                                           FROM Post p 
-                                               LEFT JOIN Author a on p.AuthorId = a.Id
-                                               LEFT JOIN Blog b on p.BlogId = b.Id 
+                                               JOIN Blog b on p.BlogId = b.Id 
                                          WHERE p.BlogId = @blogId";
                     cmd.Parameters.AddWithValue("@blogId", blogId);
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -238,9 +234,6 @@ namespace TabloidCLI.Repositories
                             Author = new Author()
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("AuthorId")),
-                                FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
-                                LastName = reader.GetString(reader.GetOrdinal("LastName")),
-                                Bio = reader.GetString(reader.GetOrdinal("Bio")),
                             },
                             Blog = new Blog()
                             {
