@@ -39,6 +39,10 @@ namespace TabloidCLI.UserInterfaceManagers
                     Add();
                     Console.WriteLine($"You've successfully added a journal entry.");
                     return this;
+                case "5":
+                        List();
+                        Remove();
+                    return this;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
@@ -51,7 +55,7 @@ namespace TabloidCLI.UserInterfaceManagers
             List<Journal> journals = _journalRepository.GetAll();
             foreach (Journal j in journals)
             {
-                Console.WriteLine($"Date: {j.CreateDateTime} | Title: {j.Title} | Content: {j.Content}");
+                Console.WriteLine($"Id: {j.Id}) Date: {j.CreateDateTime} | Title: {j.Title} | Content: {j.Content}");
                 Console.WriteLine("");
             }
         }
@@ -134,13 +138,16 @@ namespace TabloidCLI.UserInterfaceManagers
             _journalRepository.Update(JournalToEdit);
         }
 
-        //private void Remove()
-        //{
-        //    Journal JournalToDelete = Choose("Which Journal would you like to remove?");
-        //    if (JournalToDelete != null)
-        //    {
-        //        _journalRepository.Delete(JournalToDelete.Id);
-        //    }
-        //}
+        private void Remove()
+        {
+            Journal journalToDelete;
+            Console.WriteLine("Please provide the id of the journal you'd like to delete");
+            int journalId = int.Parse(Console.ReadLine());
+            journalToDelete = _journalRepository.Get(journalId);
+            if (journalToDelete != null)
+            {
+                _journalRepository.Delete(journalToDelete.Id);
+            }
+        }
     }
 }
