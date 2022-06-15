@@ -21,7 +21,7 @@ namespace TabloidCLI.Repositories
                                         OUTPUT INSERTED.Id
                                         VALUES (@Title, @Url)";
                     cmd.Parameters.AddWithValue("@Title", blog.Title);
-                    cmd.Parameters.AddWithValue("@Content", blog.Url);
+                    cmd.Parameters.AddWithValue("@Url", blog.Url);
                     int id = (int)cmd.ExecuteScalar();
                     blog.Id = id;
                 }
@@ -55,18 +55,42 @@ namespace TabloidCLI.Repositories
                 }
             }
         }
+
         public Blog Get(int id)
         {
             Blog entry = new Blog();
             return entry;
         }
+
         public void Update(Blog blog)
         {
+            using(SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Blog SET Title = @title, Url = @url WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@title", blog.Title);
+                    cmd.Parameters.AddWithValue("@url", blog.Url);
+                    cmd.Parameters.AddWithValue("@id", blog.Id);
 
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
+
         public void Delete(int id)
         {
-
+            using(SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Blog WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
 
