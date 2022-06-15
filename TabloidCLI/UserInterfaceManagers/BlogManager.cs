@@ -32,6 +32,10 @@ namespace TabloidCLI.UserInterfaceManagers
             string choice = Console.ReadLine();
             switch (choice)
             {
+                case "1":
+                    Console.WriteLine("Blog List: ");
+                    List();
+                    return this;
                 case "3":
                     Add();
                     Console.WriteLine("Your blog has been successfully added to the Database.");
@@ -51,6 +55,15 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Blog Url");
             blog.Url = Console.ReadLine();
             _blogRepository.Insert(blog);
+        }
+
+        private void List()
+        {
+            List<Blog> blogs = _blogRepository.GetAll();
+            foreach(Blog blog in blogs)
+            {
+                Console.WriteLine($"Name: {blog.Title}, Url: {blog.Url} ");
+            }
         }
 
 
