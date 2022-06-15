@@ -30,6 +30,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 2) Add Tag");
             Console.WriteLine(" 3) Remove Tag");
             Console.WriteLine(" 4) View Posts");
+            Console.WriteLine(" 5) View Blog Tags");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -46,7 +47,10 @@ namespace TabloidCLI.UserInterfaceManagers
                     RemoveTag(blog);
                     return this;
                 case "4":
-                    ViewPosts();
+                    ViewBlogPosts(blog);
+                    return this;
+                case "5":
+                    ViewBlogTags(blog);
                     return this;
                 case "0":
                     return _parentUI;
@@ -59,6 +63,15 @@ namespace TabloidCLI.UserInterfaceManagers
         private void View(Blog blog)
         {
             Console.WriteLine($"{blog.Title} - {blog.Url} ");
+        }
+
+        private void ViewBlogTags(Blog blog)
+        {
+            List<Tag> tags = _tagRepository.GetByBlog(blog);
+            foreach(Tag tag in tags)
+            {
+                Console.WriteLine(tag.Name);
+            }
         }
 
         private void AddTag(Blog blog)
@@ -107,7 +120,7 @@ namespace TabloidCLI.UserInterfaceManagers
             }
         }
 
-        private void ViewPosts()
+        private void ViewBlogPosts()
         {
             List<Post> posts = _postRepository.GetByBlog(_blogId);
             foreach(Post post in posts)
