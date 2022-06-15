@@ -118,13 +118,12 @@ namespace TabloidCLI.Repositories
                                         VALUES (@Title, @URL, @PublishDateTime, @AuthorId, @BlogId)";
                     cmd.Parameters.AddWithValue("@Title", post.Title);
                     cmd.Parameters.AddWithValue("@URL", post.Url);
-                    cmd.Parameters.AddWithValue("@Title", post.Title);
-                    cmd.Parameters.AddWithValue("@Title", post.Title);
-                    cmd.Parameters.AddWithValue("@Title", post.Title);
+                    cmd.Parameters.AddWithValue("@PublishDateTime", post.PublishDateTime);
+                    cmd.Parameters.AddWithValue("@Author", post.AuthorId);
+                    cmd.Parameters.AddWithValue("@Blog", post.BlogId);
                 }
             }
         }
-    }
 
         public void Update(Post post)
         {
