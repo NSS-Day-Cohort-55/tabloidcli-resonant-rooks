@@ -69,8 +69,32 @@ namespace TabloidCLI
         }
         public Journal Get(int id)
         {
-            Journal entry = new Journal();
-            return entry;
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT * FROM Journal WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        Journal journal = null;
+
+                        if (reader.Read())
+                        {
+                            journal = new Journal()
+                            {
+                                Id = id,
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Content = reader.GetString(reader.GetOrdinal("Content")),
+                                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime"))
+                            };
+                        }
+                        return journal;
+                    }
+                }
+            }
         }
         public void Update(Journal entry)
         {
@@ -78,7 +102,17 @@ namespace TabloidCLI
         }
         public void Delete(int id)
         {
-
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Journal
+                                        WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
