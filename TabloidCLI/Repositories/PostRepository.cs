@@ -66,7 +66,7 @@ namespace TabloidCLI.Repositories
                                          WHERE p.id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
 
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using(SqlDataReader reader = cmd.ExecuteReader())
                     {
                         Post post = null;
 
@@ -182,7 +182,28 @@ namespace TabloidCLI.Repositories
 
         public void Update(Post post)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Post
+                                        SET Title = @Title,
+                                            URL = @URL,
+                                            PublishDateTime = @PublishDateTime,
+                                            AuthorId = @AuthorId,
+                                            BlogId = @BlogId
+                                        WHERE Id = @Id";
+                    cmd.Parameters.AddWithValue("@Title", post.Title);
+                    cmd.Parameters.AddWithValue("@URL", post.Url);
+                    cmd.Parameters.AddWithValue("@PublishDateTime", post.PublishDateTime);
+                    cmd.Parameters.AddWithValue("@AuthorId", post.Author.Id);
+                    cmd.Parameters.AddWithValue("@BlogId", post.Blog.Id);
+                    cmd.Parameters.AddWithValue("@Id", post.Id); 
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void Delete(int id)
