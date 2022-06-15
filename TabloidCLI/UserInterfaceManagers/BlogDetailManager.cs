@@ -26,10 +26,11 @@ namespace TabloidCLI.UserInterfaceManagers
         {
             Blog blog = _blogRepository.Get(_blogId);
             Console.WriteLine($"{blog.Title} Details: ");
-            Console.WriteLine(" 1) View");
+            Console.WriteLine(" 1) View Blog");
             Console.WriteLine(" 2) Add Tag");
             Console.WriteLine(" 3) Remove Tag");
-            Console.WriteLine(" 4) View Posts");
+            Console.WriteLine(" 4) View Blog Posts");
+            Console.WriteLine(" 5) View Blog Tags");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -46,7 +47,10 @@ namespace TabloidCLI.UserInterfaceManagers
                     RemoveTag(blog);
                     return this;
                 case "4":
-                    ViewPosts();
+                    ViewBlogPosts(blog);
+                    return this;
+                case "5":
+                    ViewBlogTags(blog);
                     return this;
                 case "0":
                     return _parentUI;
@@ -59,6 +63,18 @@ namespace TabloidCLI.UserInterfaceManagers
         private void View(Blog blog)
         {
             Console.WriteLine($"{blog.Title} - {blog.Url} ");
+        }
+
+        private void ViewBlogTags(Blog blog)
+        {
+            Console.WriteLine("---------------------------------------------------------");
+            Console.WriteLine("Blog Tags: ");
+            foreach(Tag tag in blog.Tags)
+            {
+                Console.WriteLine(tag);
+            }
+            Console.WriteLine("---------------------------------------------------------");
+
         }
 
         private void AddTag(Blog blog)
@@ -77,6 +93,7 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 Tag tag = tags[choice - 1];
                 _blogRepository.InsertTag(blog, tag);
+               
             }
             catch (Exception)
             {
@@ -107,7 +124,7 @@ namespace TabloidCLI.UserInterfaceManagers
             }
         }
 
-        private void ViewPosts()
+        private void ViewBlogPosts(Blog blog)
         {
             List<Post> posts = _postRepository.GetByBlog(_blogId);
             foreach(Post post in posts)
