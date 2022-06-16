@@ -41,12 +41,26 @@ namespace TabloidCLI.UserInterfaceManagers
 
                     return this;
                 case "3":
-  
+                    DeleteNote();
                     return this;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
             }
         }
+
+        private void DeleteNote()
+        {
+            List<Note> notes = _noteRepository.GetAll();
+            foreach (Note n in notes)
+            {
+                Console.WriteLine($"{n.Id}) {n.Title}");
+            }
+            Console.WriteLine("Select note to delete");
+            int noteToDelete = int.Parse(Console.ReadLine());
+            _noteRepository.Delete(noteToDelete);
+            Console.WriteLine($"Note {noteToDelete} has been deleted");
+        }
+
     }
 }
