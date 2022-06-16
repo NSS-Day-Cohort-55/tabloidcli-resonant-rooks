@@ -38,15 +38,35 @@ namespace TabloidCLI.UserInterfaceManagers
                    
                     return this;
                 case "2":
-
+                    AddNote();
                     return this;
                 case "3":
   
                     return this;
+                case "0":
+                    return _parentUI;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
             }
         }
+
+        private void AddNote()
+        {
+            Console.WriteLine("New Note");
+            Note note = new Note();
+
+            Console.WriteLine("Title: ");
+            note.Title = Console.ReadLine();
+
+            Console.WriteLine("Content: ");
+            note.Content = Console.ReadLine();
+            note.CreateDateTime = DateTime.Now;
+            note.PostId = _postId;
+
+            _noteRepository.Insert(note);
+
+        }
+
     }
 }
