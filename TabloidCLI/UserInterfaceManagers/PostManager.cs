@@ -39,6 +39,16 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "1":
                     List();
                     return this;
+                case "2":
+                    Post post = Choose();
+                    if (post == null)
+                    {
+                        return this;
+                    }
+                    else
+                    {
+                        return new PostDetailsManager(this, _connectionString, post.Id);
+                    }
                 case "3":
                     Add();
                     return this;
@@ -96,6 +106,36 @@ namespace TabloidCLI.UserInterfaceManagers
             _postRepository.Insert(post);
         }
 
+        public Post Choose(string prompt = null)
+        {
+            if (prompt == null)
+            {
+                prompt = "Please choose a post:";
+            }
+
+            Console.WriteLine(prompt);
+
+            List<Post> posts = _postRepository.GetAll();
+
+            for (int i = 0; i < posts.Count; i++)
+            {
+                Post post = posts[i];
+                Console.WriteLine($" {i + 1}) {post.Title}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                return posts[choice - 1];
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Invalid Selection");
+                return null;
+            }
+        }
         private void Edit()
         {
             Post post = new Post();
