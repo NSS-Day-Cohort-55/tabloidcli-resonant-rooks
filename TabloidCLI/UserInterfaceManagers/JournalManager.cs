@@ -22,10 +22,9 @@ namespace TabloidCLI.UserInterfaceManagers
         {
             Console.WriteLine("Journal Menu");
             Console.WriteLine(" 1) List Journals");
-            Console.WriteLine(" 2) Journal Details");
-            Console.WriteLine(" 3) Add Journal");
-            Console.WriteLine(" 4) Edit Journal");
-            Console.WriteLine(" 5) Remove Journal");
+            Console.WriteLine(" 2) Add Journal");
+            Console.WriteLine(" 3) Edit Journal");
+            Console.WriteLine(" 4) Remove Journal");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -35,16 +34,16 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "1":
                     List();
                     return this;
-                case "3":
+                case "2":
                     Add();
                     Console.WriteLine($"You've successfully added a journal entry.");
                     return this;
-                case "4":
+                case "3":
                     List();
                     Edit();
                     Console.WriteLine($"You've successfully updated your journal entry!");
                     return this;
-                case "5":
+                case "4":
                     List();
                     Remove();
                     return this;
