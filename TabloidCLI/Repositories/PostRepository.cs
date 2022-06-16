@@ -23,15 +23,11 @@ namespace TabloidCLI.Repositories
 
                         while (reader.Read())
                         {
-                            int idValue = reader.GetInt32(reader.GetOrdinal("Id"));
-                            string titleValue = reader.GetString(reader.GetOrdinal("Title"));
-                            string urlValue = reader.GetString(reader.GetOrdinal("Url"));
-
                             Post post = new Post()
                             {
-                                Id = idValue,
-                                Title = titleValue,
-                                Url = urlValue
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Url = reader.GetString(reader.GetOrdinal("Url"))
                             };
 
                             posts.Add(post);
@@ -208,7 +204,18 @@ namespace TabloidCLI.Repositories
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Post
+                                        WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public List<Post> GetByBlog(int blogId)
