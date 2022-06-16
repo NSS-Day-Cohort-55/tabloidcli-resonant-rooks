@@ -57,6 +57,8 @@ namespace TabloidCLI.UserInterfaceManagers
                     Remove();
                     Console.WriteLine("Blog has been successfully removed from the Database. ");
                     return this;
+                case "0":
+                    return _parentUI;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
