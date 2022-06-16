@@ -29,6 +29,11 @@ namespace TabloidCLI
                 }
             }
         }
+        public List<Journal> GetAll(int journalId)
+        {
+            List<Journal> list = new List<Journal>();
+            return list;
+        }
         public List<Journal> GetAll()
         {
             using (SqlConnection conn = Connection)

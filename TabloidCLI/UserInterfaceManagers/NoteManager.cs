@@ -35,7 +35,7 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
-                   
+                    List();
                     return this;
                 case "2":
                     AddNote();
@@ -48,6 +48,18 @@ namespace TabloidCLI.UserInterfaceManagers
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
+            }
+        }
+        private void List()
+        {
+            List<Note> notes = _noteRepository.GetNotes(_postId);
+            foreach (Note n in notes)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"Title: {n.Title}");
+                Console.WriteLine($"Content: {n.Content}");
+                Console.WriteLine($"Date Created: {n.CreateDateTime}");
+                Console.WriteLine();
             }
         }
 
