@@ -52,6 +52,9 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "3":
                     Add();
                     return this;
+                case "4":
+                    Edit();
+                    return this;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
@@ -74,10 +77,10 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("New Post Title: ");
             post.Title = Console.ReadLine();
 
-            Console.WriteLine("New Post URL: ");
+            Console.Write("New Post URL: ");
             post.Url = Console.ReadLine();
 
-            Console.WriteLine("New Post Publish Date: ");
+            Console.Write("New Post Publish Date: ");
             post.PublishDateTime = DateTime.Parse(Console.ReadLine());
 
             Console.WriteLine("Choose an Author for the Post:");
@@ -132,6 +135,68 @@ namespace TabloidCLI.UserInterfaceManagers
                 Console.WriteLine("Invalid Selection");
                 return null;
             }
+        }
+        private void Edit()
+        {
+            Post post = new Post();
+            Console.WriteLine("Which Post would you like to edit?");
+            List<Post> posts = _postRepository.GetAll();
+            foreach (Post p in posts)
+            {
+                Console.WriteLine($"{p.Id}) {p.Title}");
+            }
+            int postToEditId = int.Parse(Console.ReadLine());
+            post = _postRepository.Get(postToEditId);
+
+            Console.Write("Edit Post Title (blank to leave unchanged: ");
+            string title = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                post.Title = title;
+            }
+
+            Console.Write("Edit Post URL (blank to leave unchanged: ");
+            string url = Console.ReadLine();
+            if(!string.IsNullOrWhiteSpace(url))
+            {
+                post.Url = url;
+            }
+
+            Console.Write("Edit Post Publish Date (blank to leave unchanged: ");
+            string stringPublishDate = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(stringPublishDate))
+            {
+                DateTime publishDate = DateTime.Parse(stringPublishDate);
+                post.PublishDateTime = publishDate;
+            }
+
+            Console.WriteLine("Edit Post Author (blank to leave unchanged: ");
+            List<Author> authors = _authorRepository.GetAll();
+            foreach (Author author in authors)
+            {
+                Console.WriteLine($"{author.Id}) {author.FullName}");
+            }
+            string stringPostAuthorId = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(stringPostAuthorId))
+            {
+                int postAuthorId = int.Parse(stringPostAuthorId);
+                post.Author = _authorRepository.Get(postAuthorId);
+            }
+
+            Console.WriteLine("Edit Post Blog (blank to leave unchanged: ");
+            List<Blog> blogs = _blogRepository.GetAll();
+            foreach (Blog blog in blogs)
+            {
+                Console.WriteLine($"{blog.Id}) {blog.Title}");
+            }
+            string stringPostBlogId = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(stringPostBlogId))
+            {
+                int postBlogId = int.Parse(stringPostBlogId);
+                post.Blog = _blogRepository.Get(postBlogId);
+            }
+
+            _postRepository.Update(post);
         }
     }
 }
