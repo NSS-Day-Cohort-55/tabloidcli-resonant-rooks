@@ -90,6 +90,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 int choice = int.Parse(input);
                 Tag tag = tags[choice - 1];
                 _postRepository.InsertTag(post, tag);
+                Console.WriteLine($"The tag {tag.Name} has been added to the post {post.Title}.");
             }
             catch (Exception)
             {
