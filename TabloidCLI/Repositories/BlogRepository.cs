@@ -122,7 +122,10 @@ namespace TabloidCLI.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"DELETE FROM Blog WHERE id = @id";
+                    cmd.CommandText = @"UPDATE Post SET BlogId = Null
+                                        WHERE Post.BlogId = @id
+                                        DELETE FROM Blog WHERE Blog.id = @id
+                                        DELETE FROM BlogTag WHERE BlogTag.BlogId = @id";
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.ExecuteNonQuery();
                 }
