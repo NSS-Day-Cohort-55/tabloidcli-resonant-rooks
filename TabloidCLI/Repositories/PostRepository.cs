@@ -268,5 +268,24 @@ namespace TabloidCLI.Repositories
                 }
             }
         }
+
+        public void InsertTag(Post post, Tag tag)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO PostTag (PostId, TagId)
+                                        OUTPUT INSERTED.Id
+                                        VALUES (@postId, @tagId)";
+                    cmd.Parameters.AddWithValue("@postId", post.Id);
+                    cmd.Parameters.AddWithValue("@tagId", tag.Id);
+                    int id = (int)cmd.ExecuteScalar();
+
+                    post.Id = id;
+                }
+            }
+        }
     }
 }
