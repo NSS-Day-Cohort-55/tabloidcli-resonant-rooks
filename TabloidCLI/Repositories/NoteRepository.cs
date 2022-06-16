@@ -16,7 +16,7 @@ namespace TabloidCLI.Repositories
             List<Note> notes = new List<Note>();
             return notes;
         }
-        public List<Note> GetAll(int postId)
+        public List<Note> GetNotes(int postId)
         {
             using (SqlConnection conn = Connection)
             {

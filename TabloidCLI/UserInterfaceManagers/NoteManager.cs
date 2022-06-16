@@ -52,7 +52,7 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         private void List()
         {
-            List<Note> notes = _noteRepository.GetAll(_postId);
+            List<Note> notes = _noteRepository.GetNotes(_postId);
             foreach (Note n in notes)
             {
                 Console.WriteLine();
