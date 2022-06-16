@@ -35,7 +35,7 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
-                   
+                    List();
                     return this;
                 case "2":
 
@@ -46,6 +46,17 @@ namespace TabloidCLI.UserInterfaceManagers
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
+            }
+        }
+        private void List()
+        {
+            List<Note> notes = _noteRepository.GetAll(_postId);
+            foreach (Note n in notes)
+            {
+                Console.WriteLine($"{n.Title}");
+                Console.WriteLine($"{n.Content}");
+                Console.WriteLine($"{n.CreateDateTime}");
+                Console.WriteLine();
             }
         }
     }
